@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OMFMSample</string>
+    <string name="options_1">Option 1</string>
+    <string name="options_2">Option 2</string>
+    <string name="options_3">Option 3</string>
+    <string name="options_4">Option 4</string>
+</resources>

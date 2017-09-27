@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="OneMoreFabMenu">
+        <attr name="content_options" format="reference"/>
+        <attr name="color_main_button" format="color"/>
+        <attr name="color_secondary_buttons" format="color"/>
+        <attr name="expanded_background_color" format="color"/>
+    </declare-styleable>
+
+</resources>
