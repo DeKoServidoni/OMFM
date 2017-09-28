@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka-android'
 
 ext {
-    bintrayRepo = 'OneMoreFabMenu'
-    bintrayName = 'omfm'
+    bintrayRepo = 'AndroidLibs'
+    bintrayName = 'OMFM'
 
     publishedGroupId = 'com.github.dekoservidoni'
     libraryName = 'OMFM'
