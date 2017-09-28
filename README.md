@@ -4,8 +4,7 @@ Another floating action button menu with expand/collapse behavior.
 
  [ ![Download](https://api.bintray.com/packages/dekoservidoni/AndroidLibs/OMFM/images/download.svg) ](https://bintray.com/dekoservidoni/AndroidLibs/OMFM/_latestVersion)
 
-![Collapsed screen] (\collapsed.png) 
-![Expanded screen] (expanded.png)
+![Collapsed screen] (/images/collapsed.png) ![Expanded screen] (/images/expanded.png)
 
 ## How to use
 
