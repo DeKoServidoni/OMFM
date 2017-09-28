@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka-android'
 
 ext {
-    bintrayRepo = 'maven'
+    bintrayRepo = 'OneMoreFabMenu'
     bintrayName = 'omfm'
 
     publishedGroupId = 'com.github.dekoservidoni'
@@ -73,4 +73,4 @@ repositories {
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from:  'bintrayv1.gradle'
