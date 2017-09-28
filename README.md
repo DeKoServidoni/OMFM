@@ -15,7 +15,7 @@ This library have 1 main layout param and 3 optionals
 `<app:color_secondary_buttons>` color of the other options buttons<br>
 `<app:expanded_background_color>` color of the background when the component expands
 
-```kotlin
+```xml
     <com.dekoservidoni.omfm.OneMoreFabMenu
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@ and the others will be the first option, second option and etc.
 
 The first item don't need to have a text because only the options have labels.
 
-```kotlin
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -73,6 +73,6 @@ The first item don't need to have a text because only the options have labels.
 
 To integrate with your project, just add the following line to your app `<build.gradle>` file
 
-```kotlin
+```java
 compile 'com.github.dekoservidoni:omfm:1.0.0'
 ```
