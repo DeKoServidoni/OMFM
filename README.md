@@ -2,7 +2,7 @@
 
 Another floating action button menu with expand/collapse behavior.
 
- [ ![Download](https://api.bintray.com/packages/dekoservidoni/AndroidLibs/OMFM/images/download.svg) ](https://bintray.com/dekoservidoni/AndroidLibs/OMFM/_latestVersion)
+ [ ![Download](https://api.bintray.com/packages/dekoservidoni/AndroidLibs/OMFM/images/download.svg) ](https://bintray.com/dekoservidoni/AndroidLibs/OMFM/_latestVersion)  [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-OneMoreFabMenu-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/6280)
 
 ![Example gif](/images/example.gif) 
 
