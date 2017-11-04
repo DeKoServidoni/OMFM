@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Build
+import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
@@ -20,18 +21,16 @@ import android.widget.TextView
 class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : ViewGroup(context, attrs, defStyleAttr), View.OnClickListener {
 
-    interface OptionsClick {
-        fun onOptionClick(optionId: Int?)
-    }
-
     enum class Direction {
         EXPANDED, COLLAPSED
     }
 
+    // Callback
+    var clickCallback: ((id: Int) -> Unit)? = null
+
     private var options = PopupMenu(context, null).menu
     private var inflater = MenuInflater(context)
     private var initialFab = FloatingActionButton(context)
-    private var clickCallback: OptionsClick? = null
 
     // initial state is collapsed
     private var state = Direction.COLLAPSED
@@ -64,7 +63,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     // Fab click listener
     private val fabClickListener = OnClickListener {
-        clickCallback?.onOptionClick(it.id)
+        clickCallback?.invoke(it.id)
     }
 
     init {
@@ -179,26 +178,65 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     override fun onClick(view: View?) {
-        if (isExpanded()) {
-            state = Direction.COLLAPSED
-            initialFab.startAnimation(collapseInitialFab)
-            animateChildren(downChildAnimation)
-        } else {
-            state = Direction.EXPANDED
-            initialFab.startAnimation(expandInitialFab)
-            animateChildren(upChildAnimation)
-        }
-
-        requestLayout()
+        if (isExpanded()) collapse() else expand()
     }
 
     /// Public methods
 
-    fun setOptionsClick(callback: OptionsClick) {
-        clickCallback = callback
+    fun isExpanded(): Boolean {
+        return state == Direction.EXPANDED
+    }
+
+    fun collapse() {
+        state = Direction.COLLAPSED
+        initialFab.startAnimation(collapseInitialFab)
+        animateChildren(downChildAnimation)
+
+        requestLayout()
+    }
+
+    fun expand() {
+        state = Direction.EXPANDED
+        initialFab.startAnimation(expandInitialFab)
+        animateChildren(upChildAnimation)
+
+        requestLayout()
+    }
+
+    fun show() {
+        visibility = View.VISIBLE
+        initialFab.show()
+    }
+
+    fun hide() {
+        if (isExpanded()) {
+            downChildAnimation.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    hideMenu()
+                    downChildAnimation.setAnimationListener(null)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {}
+            })
+
+            collapse()
+        } else {
+            hideMenu()
+        }
     }
 
     /// Private methods
+
+    private fun hideMenu() {
+        initialFab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+            override fun onHidden(fab: FloatingActionButton?) {
+                super.onShown(fab)
+                fab!!.visibility = View.INVISIBLE
+                visibility = View.INVISIBLE
+            }
+        })
+    }
 
     private fun initializeUI(attrs: AttributeSet? = null) {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.OneMoreFabMenu)
@@ -247,10 +285,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             // add the views
             addView(fab)
         }
-    }
-
-    private fun isExpanded(): Boolean {
-        return state == Direction.EXPANDED
     }
 
     private fun animateChildren(animation: Animation) {
