@@ -179,17 +179,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     override fun onClick(view: View?) {
-        if (isExpanded()) {
-            state = Direction.COLLAPSED
-            initialFab.startAnimation(collapseInitialFab)
-            animateChildren(downChildAnimation)
-        } else {
-            state = Direction.EXPANDED
-            initialFab.startAnimation(expandInitialFab)
-            animateChildren(upChildAnimation)
-        }
-
-        requestLayout()
+        if (isExpanded()) collapse() else expand()
     }
 
     /// Public methods
@@ -198,7 +188,60 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         clickCallback = callback
     }
 
+    fun isExpanded(): Boolean {
+        return state == Direction.EXPANDED
+    }
+
+    fun collapse() {
+        state = Direction.COLLAPSED
+        initialFab.startAnimation(collapseInitialFab)
+        animateChildren(downChildAnimation)
+
+        requestLayout()
+    }
+
+    fun expand() {
+        state = Direction.EXPANDED
+        initialFab.startAnimation(expandInitialFab)
+        animateChildren(upChildAnimation)
+
+        requestLayout()
+    }
+
+    fun show() {
+        visibility = View.VISIBLE
+        initialFab.show()
+    }
+
+    fun hide() {
+        if (isExpanded()) {
+            downChildAnimation.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    hideMenu()
+                    downChildAnimation.setAnimationListener(null)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {}
+            })
+
+            collapse()
+        } else {
+            hideMenu()
+        }
+    }
+
     /// Private methods
+
+    private fun hideMenu() {
+        initialFab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+            override fun onHidden(fab: FloatingActionButton?) {
+                super.onShown(fab)
+                fab!!.visibility = View.INVISIBLE
+                visibility = View.INVISIBLE
+            }
+        })
+    }
 
     private fun initializeUI(attrs: AttributeSet? = null) {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.OneMoreFabMenu)
@@ -247,10 +290,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             // add the views
             addView(fab)
         }
-    }
-
-    private fun isExpanded(): Boolean {
-        return state == Direction.EXPANDED
     }
 
     private fun animateChildren(animation: Animation) {
