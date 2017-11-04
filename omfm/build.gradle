@@ -28,7 +28,7 @@ ext {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
 
     defaultConfig {
@@ -71,6 +71,3 @@ dependencies {
 repositories {
     mavenCentral()
 }
-
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from:  'bintrayv1.gradle'

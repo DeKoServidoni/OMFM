@@ -20,18 +20,16 @@ import android.widget.TextView
 class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : ViewGroup(context, attrs, defStyleAttr), View.OnClickListener {
 
-    interface OptionsClick {
-        fun onOptionClick(optionId: Int?)
-    }
-
     enum class Direction {
         EXPANDED, COLLAPSED
     }
 
+    // Callback
+    var clickCallback: ((id: Int) -> Unit)? = null
+
     private var options = PopupMenu(context, null).menu
     private var inflater = MenuInflater(context)
     private var initialFab = FloatingActionButton(context)
-    private var clickCallback: OptionsClick? = null
 
     // initial state is collapsed
     private var state = Direction.COLLAPSED
@@ -64,7 +62,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     // Fab click listener
     private val fabClickListener = OnClickListener {
-        clickCallback?.onOptionClick(it.id)
+        clickCallback?.invoke(it.id)
     }
 
     init {
@@ -183,10 +181,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /// Public methods
-
-    fun setOptionsClick(callback: OptionsClick) {
-        clickCallback = callback
-    }
 
     fun isExpanded(): Boolean {
         return state == Direction.EXPANDED
