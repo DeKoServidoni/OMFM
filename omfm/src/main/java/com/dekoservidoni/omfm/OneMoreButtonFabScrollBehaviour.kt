@@ -6,9 +6,6 @@ import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
 
-/**
- * Created by antonio on 11/4/17.
- */
 class OneMoreButtonFabScrollBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<OneMoreFabMenu>() {
 
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: OneMoreFabMenu,

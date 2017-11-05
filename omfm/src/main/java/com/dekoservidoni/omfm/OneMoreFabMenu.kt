@@ -230,7 +230,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     /// Private methods
 
     private fun hideMenu() {
-        initialFab?.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+        initialFab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
             override fun onHidden(fab: FloatingActionButton?) {
                 super.onShown(fab)
                 fab?.visibility = View.INVISIBLE
