@@ -184,13 +184,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     /// Public methods
 
-    fun setOptionsClick(callback: OptionsClick) {
-        clickCallback = callback
-    }
-
-    fun isExpanded(): Boolean {
-        return state == Direction.EXPANDED
-    }
+    fun isExpanded() = state == Direction.EXPANDED
 
     fun collapse() {
         state = Direction.COLLAPSED
@@ -216,28 +210,30 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     fun hide() {
         if (isExpanded()) {
             downChildAnimation.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationRepeat(animation: Animation?) { }
                 override fun onAnimationEnd(animation: Animation?) {
                     hideMenu()
-                    downChildAnimation.setAnimationListener(null)
+                    downChildAnimation?.setAnimationListener(null)
                 }
-
-                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) { }
             })
-
             collapse()
         } else {
             hideMenu()
         }
     }
 
+    fun setOptionsClick(callback: OptionsClick) {
+        clickCallback = callback
+    }
+
     /// Private methods
 
     private fun hideMenu() {
-        initialFab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+        initialFab?.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
             override fun onHidden(fab: FloatingActionButton?) {
                 super.onShown(fab)
-                fab!!.visibility = View.INVISIBLE
+                fab?.visibility = View.INVISIBLE
                 visibility = View.INVISIBLE
             }
         })
