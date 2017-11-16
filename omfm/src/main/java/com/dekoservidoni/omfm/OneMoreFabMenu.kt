@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -33,15 +34,20 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     private var initialFab = FloatingActionButton(context)
     private var clickCallback: OptionsClick? = null
 
+    // flags
+    private var closeOnClick = false
+
     // initial state is collapsed
     private var state = Direction.COLLAPSED
 
     // tag id
     private val tagId = R.id.omfm_tag
 
-    // max sizes
+    // sizes
     private var maxButtonWidth = 0
     private var maxButtonHeight = 0
+    private var mainFabSize = -1
+    private var secondaryFabSize = -1
 
     // layout parameters
     private var fabSpacing = 0
@@ -62,13 +68,32 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     private var colorMainButton = ContextCompat.getColor(context, R.color.omfm_default_color)
     private var colorSecondaryButtons = ContextCompat.getColor(context, R.color.omfm_default_color)
 
-    // Fab click listener
+    // click listener
     private val fabClickListener = OnClickListener {
         clickCallback?.onOptionClick(it.id)
+
+        if(closeOnClick) {
+            collapse()
+        }
     }
 
     init {
         initializeUI(attrs)
+
+        downChildAnimation.setAnimationListener(object : Animation.AnimationListener {
+
+            override fun onAnimationStart(animation: Animation) {
+                // empty
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                requestLayout()
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                // empty
+            }
+        })
     }
 
     /// Override methods
@@ -168,11 +193,13 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             // the entire screen
             height = Resources.getSystem().displayMetrics.heightPixels
             setBackgroundColor(expandedBackgroundColor)
+            setOnClickListener({ collapse() })
         } else {
             // calculating the total width and height of the component
             width = maxButtonWidth + if (maxLabelWidth > 0) maxLabelWidth else 0
             height += fabSpacing * (options.size() - 1)
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
+            setOnClickListener(null)
         }
 
         setMeasuredDimension(width, height)
@@ -190,15 +217,12 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         state = Direction.COLLAPSED
         initialFab.startAnimation(collapseInitialFab)
         animateChildren(downChildAnimation)
-
-        requestLayout()
     }
 
     fun expand() {
         state = Direction.EXPANDED
         initialFab.startAnimation(expandInitialFab)
         animateChildren(upChildAnimation)
-
         requestLayout()
     }
 
@@ -209,7 +233,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     fun hide() {
         if (isExpanded()) {
-            downChildAnimation.setAnimationListener(object : Animation.AnimationListener {
+            downChildAnimation.setAnimationListener(object : AnimationListener {
                 override fun onAnimationRepeat(animation: Animation?) { }
                 override fun onAnimationEnd(animation: Animation?) {
                     hideMenu()
@@ -245,7 +269,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         if (attributes.hasValue(R.styleable.OneMoreFabMenu_content_options)) {
             inflater.inflate(attributes.getResourceId(R.styleable.OneMoreFabMenu_content_options, 0), options)
         } else {
-            throw Exception("CustomFabMenu need to have app:content_options with a resource menu!")
+            throw Exception("OneMoreFabMenu need to have app:content_options with a resource menu!")
         }
 
         val mainButtonColor = attributes.getResourceId(R.styleable.OneMoreFabMenu_color_main_button, R.color.omfm_default_color)
@@ -256,6 +280,11 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
         val backgroundColor = attributes.getResourceId(R.styleable.OneMoreFabMenu_expanded_background_color, android.R.color.transparent)
         this.expandedBackgroundColor = ContextCompat.getColor(context, backgroundColor)
+
+        this.mainFabSize = attributes.getInt(R.styleable.OneMoreFabMenu_size_main_button, FloatingActionButton.SIZE_NORMAL)
+        this.secondaryFabSize = attributes.getInt(R.styleable.OneMoreFabMenu_size_secondary_buttons, FloatingActionButton.SIZE_MINI)
+
+        this.closeOnClick = attributes.getBoolean(R.styleable.OneMoreFabMenu_close_on_click, false)
 
         addButtons()
 
@@ -303,7 +332,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         fab.layoutParams = generateDefaultLayoutParams()
         fab.setImageDrawable(item.icon)
 
-        val size = if(isFirst) FloatingActionButton.SIZE_NORMAL else FloatingActionButton.SIZE_MINI
+        val size = if(isFirst) mainFabSize else secondaryFabSize
         fab.size = size
 
         val buttonColor = if(isFirst) colorMainButton else colorSecondaryButtons
