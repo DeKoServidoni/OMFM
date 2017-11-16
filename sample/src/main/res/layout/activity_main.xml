@@ -29,8 +29,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:content_options="@menu/omfm_content_options"
+        app:close_on_click="true"
         app:color_main_button="@color/colorPrimaryDark"
         app:color_secondary_buttons="@color/colorPrimary"
-        app:expanded_background_color="@color/omfm_expanded_background_sample"/>
+        app:expanded_background_color="@color/omfm_expanded_background_sample"
+        app:size_main_button="@integer/omfm_fab_size_normal"
+        app:size_secondary_buttons="@integer/omfm_fab_size_mini" />
 
 </android.support.design.widget.CoordinatorLayout>
