@@ -10,15 +10,17 @@ Another floating action button menu with expand/collapse behavior.
 
 ## How to use
 
-This library have 1 main layout param and 3 optionals
+This library have 1 main layout param and 6 optionals
 
-`<app:content_options>` (MUST HAVE!) that need to receive a "menu" resource file with the options that the menu will show<br>
-`<app:color_main_button>` (optional) color of the main button (with + and x)<br>
-`<app:color_secondary_buttons>` (optional) color of the other options buttons<br>
-`<app:expanded_background_color>` (optional) color of the background when the component expands<br>
-`<app:close_on_click="true">` (optional, *default=false*) flag to enable/disable the close menu when some option is clicked<br>
-`<app:size_main_button="@integer/omfm_fab_size_normal">` (optional) size of the main button of the menu <br>
-`<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` (optional) size of the secondary buttons of the menu
+* `<app:content_options>` **[Required]** "menu" resource file with the options that the menu will show<br>
+* `<app:color_main_button>` **[optional]** color of the main button (with + and x)<br>
+* `<app:color_secondary_buttons>` **[optional]** color of the other options buttons<br>
+* `<app:expanded_background_color>` **[optional]** color of the background when the component expands<br>
+* `<app:size_main_button="@integer/omfm_fab_size_normal">` **[optional]** size of the main button<br>
+* `<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` **[optional]** size of the secondary buttons<br>
+* `<app:close_on_click="true">` **[optional, *default=false*]** flag to enable/disable the close menu when some option is clicked<br>
+
+###### Example
 
 ```xml
    <com.dekoservidoni.omfm.OneMoreFabMenu
@@ -82,7 +84,7 @@ The first item don't need to have a text because only the options have labels.
 To integrate with your project, just add the following line to your app `<build.gradle>` file
 
 ```java
-compile 'com.github.dekoservidoni:omfm:1.0.0'
+compile 'com.github.dekoservidoni:omfm:1.0.1'
 ```
 
 ## Licence
