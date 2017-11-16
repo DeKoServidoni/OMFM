@@ -16,7 +16,7 @@ This library have 1 main layout param and 3 optionals
 `<app:color_main_button>` (optional) color of the main button (with + and x)<br>
 `<app:color_secondary_buttons>` (optional) color of the other options buttons<br>
 `<app:expanded_background_color>` (optional) color of the background when the component expands<br>
-`<app:close_on_click="true">` (optional, default is true) flag to enable/disable the close menu when some option is clicked<br>
+`<app:close_on_click="true">` (optional, *default=false*) flag to enable/disable the close menu when some option is clicked<br>
 `<app:size_main_button="@integer/omfm_fab_size_normal">` (optional) size of the main button of the menu <br>
 `<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` (optional) size of the secondary buttons of the menu
 
