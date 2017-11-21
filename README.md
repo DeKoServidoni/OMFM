@@ -84,7 +84,7 @@ The first item don't need to have a text because only the options have labels.
 To integrate with your project, just add the following line to your app `<build.gradle>` file
 
 ```java
-compile 'com.github.dekoservidoni:omfm:1.0.2'
+compile 'com.github.dekoservidoni:omfm:1.0.3'
 ```
 
 ## Licence
