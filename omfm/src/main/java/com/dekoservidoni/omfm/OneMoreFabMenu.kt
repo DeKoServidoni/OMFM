@@ -56,6 +56,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     private val labelSpacing = 20
     private val childElevation = 10f
     private val labelPadding = 8
+    private val initialFabSpacing = 35
 
     // animations
     private val expandInitialFab = AnimationUtils.loadAnimation(context, R.anim.omfm_anim_main_expand)
@@ -196,8 +197,8 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             setOnClickListener({ collapse() })
         } else {
             // calculating the total width and height of the component
-            width = maxButtonWidth + if (maxLabelWidth > 0) maxLabelWidth else 0
-            height += fabSpacing * (options.size() - 1)
+            width = maxButtonWidth + initialFabSpacing
+            height = initialFab.measuredHeight + initialFabSpacing
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
             setOnClickListener(null)
         }
