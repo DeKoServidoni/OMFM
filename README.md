@@ -19,7 +19,7 @@ This library have 1 main layout param and 6 optionals
 * `<app:rotate_main_button>` **[optional, *default=true*]** enable/disable the rotation of main button<br>
 * `<app:size_main_button="@integer/omfm_fab_size_normal">` **[optional]** size of the main button<br>
 * `<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` **[optional]** size of the secondary buttons<br>
-* `<app:close_on_click="true">` **[optional, *default=false*]** flag to enable/disable the close menu when some option is clicked<br>
+* `<app:close_on_click>` **[optional, *default=false*]** flag to enable/disable the close menu when some option is clicked<br>
 
 ###### Example
 
