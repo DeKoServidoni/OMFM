@@ -36,6 +36,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     // flags
     private var closeOnClick = false
+    private var rotateMainButton = true
 
     // initial state is collapsed
     private var state = Direction.COLLAPSED
@@ -216,13 +217,21 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     fun collapse() {
         state = Direction.COLLAPSED
-        initialFab.startAnimation(collapseInitialFab)
+
+        if(rotateMainButton) {
+            initialFab.startAnimation(collapseInitialFab)
+        }
+
         animateChildren(downChildAnimation)
     }
 
     fun expand() {
         state = Direction.EXPANDED
-        initialFab.startAnimation(expandInitialFab)
+
+        if(rotateMainButton) {
+            initialFab.startAnimation(expandInitialFab)
+        }
+
         animateChildren(upChildAnimation)
         requestLayout()
     }
@@ -286,6 +295,8 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         this.secondaryFabSize = attributes.getInt(R.styleable.OneMoreFabMenu_size_secondary_buttons, FloatingActionButton.SIZE_MINI)
 
         this.closeOnClick = attributes.getBoolean(R.styleable.OneMoreFabMenu_close_on_click, false)
+
+        this.rotateMainButton = attributes.getBoolean(R.styleable.OneMoreFabMenu_rotate_main_button, true)
 
         addButtons()
 
