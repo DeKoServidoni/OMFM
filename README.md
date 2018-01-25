@@ -8,9 +8,19 @@ Another floating action button menu with expand/collapse behavior.
 
 ![Example gif](/images/example_v1.0.3.gif) 
 
+## What's new:
+### Version 1.1.0 (01/25/2018)
+* [Feature] Add parameter in the layout to background text label
+* [Feature] Add parameter in the layout to color text label
+* [Feature] Add parameter in the layout to add label to the main button
+* [Feature] Add parameter in the layout to add action to the main button
+* [Feature] Add parameter in the layout to add drawable to the main button when opened
+* [Enhancement] Increase padding left/right of the label
+* [Enhancement] Update sample to have different example images
+
 ## How to use
 
-This library have 1 main layout param and 6 optionals
+This library have 1 main layout param and 12 optionals
 
 * `<app:content_options>` **[Required]** "menu" resource file with the options that the menu will show<br>
 * `<app:color_main_button>` **[optional]** color of the main button (with + and x)<br>
@@ -20,6 +30,11 @@ This library have 1 main layout param and 6 optionals
 * `<app:size_main_button="@integer/omfm_fab_size_normal">` **[optional]** size of the main button<br>
 * `<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` **[optional]** size of the secondary buttons<br>
 * `<app:close_on_click>` **[optional, *default=false*]** flag to enable/disable the close menu when some option is clicked<br>
+* `<app:label_background_color>` **[optional]** change the background color of the label<br>
+* `<app:label_background_drawable>` **[optional]** if you want a drawable instead of color in the label's background<br>
+* `<app:label_text_color>` **[optional]** change the color of the label's text<br>
+* `<app:enable_main_as_action>` **[optional, *default=false*]** flag to enable/disable the main button as an action when the menu is expanded<br>
+* `<app:main_action_drawable>` **[optional]** drawable of the main button when it is set as an action. The default is the icon defined in the content menu file<br>
 
 ###### Example
 
@@ -34,9 +49,12 @@ This library have 1 main layout param and 6 optionals
         app:color_main_button="@color/colorPrimaryDark"
         app:color_secondary_buttons="@color/colorPrimary"
         app:expanded_background_color="@color/omfm_expanded_background_sample"
-        app:rotate_main_button="true"
+        app:rotate_main_button="false"
         app:size_main_button="@integer/omfm_fab_size_normal"
-        app:size_secondary_buttons="@integer/omfm_fab_size_mini" />
+        app:size_secondary_buttons="@integer/omfm_fab_size_mini"
+        app:label_text_color="@color/colorPrimary"
+        app:enable_main_as_action="true"
+        app:main_action_drawable="@mipmap/ic_launcher"/>
 ```
 
 #### Menu resource example
@@ -51,7 +69,7 @@ The first item don't need to have a text because only the options have labels.
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- First button is the initial Fab of the menu -->
-    <!-- Don't need the title in this case, so let it empty -->
+    <!-- Title here can be empty if you don't to add any action in the main button -->
     <item
         android:id="@+id/main_option"
         android:icon="@drawable/ic_add_white_24px"
@@ -86,7 +104,7 @@ The first item don't need to have a text because only the options have labels.
 To integrate with your project, just add the following line to your app `<build.gradle>` file
 
 ```java
-compile 'com.github.dekoservidoni:omfm:1.0.4'
+compile 'com.github.dekoservidoni:omfm:1.1.0'
 ```
 
 ## Licence
