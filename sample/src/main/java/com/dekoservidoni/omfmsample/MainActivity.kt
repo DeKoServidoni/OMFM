@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         var text = ""
 
         when(optionId) {
+            R.id.main_option -> text = "Option Main clicked!"
             R.id.option1 -> text = "Option 1 clicked!"
             R.id.option2 -> text = "Option 2 clicked!"
             R.id.option3 -> text = "Option 3 clicked!"

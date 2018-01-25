@@ -37,6 +37,6 @@
         app:size_main_button="@integer/omfm_fab_size_normal"
         app:size_secondary_buttons="@integer/omfm_fab_size_mini"
         app:label_text_color="@color/colorPrimary"
-        app:enable_main_as_action="true"/>
+        app:enable_main_as_action="false"/>
 
 </android.support.design.widget.CoordinatorLayout>

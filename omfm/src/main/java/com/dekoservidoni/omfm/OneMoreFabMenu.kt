@@ -118,7 +118,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
         initialFab.layout(initialFabLeft - initialFabRightMargin, initialFabTop - initialFabBottomMargin,
                 initialFabRight - initialFabRightMargin, initialFabBottom - initialFabBottomMargin)
-        initialFab.setOnClickListener(this@OneMoreFabMenu)
 
         // if this flag is true so we need to show the label of
         // the main button that are inside the content defined by user
@@ -137,6 +136,10 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
+        // set the listener of the main button
+        // if the main was enabled as action
+        initialFab.setOnClickListener(if(!enableMainAsAction || !isExpanded()) this@OneMoreFabMenu else fabClickListener)
+
         // bring the initial fab to front so we can
         // call it onClick when the menu is collapsed
         bringChildToFront(initialFab)
@@ -149,8 +152,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         for(i in 0..(childCount-1)) {
             val view = getChildAt(i)
 
-            // skipping gone views (because we don't need to calculate) and
-            // the initial button
+            // skipping gone views (because we don't need to calculate), the initial button and main label if exists
             if(view.id != initialFab.id && view.id != mainLabelId && view.visibility != View.GONE) {
 
                 // positioning the fab button
