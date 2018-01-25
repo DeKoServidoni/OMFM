@@ -14,6 +14,7 @@
         <attr name="label_background_drawable" format="reference"/>
         <attr name="label_text_color" format="color"/>
         <attr name="enable_main_as_action" format="boolean"/>
+        <attr name="main_action_drawable" format="reference"/>
     </declare-styleable>
 
 </resources>

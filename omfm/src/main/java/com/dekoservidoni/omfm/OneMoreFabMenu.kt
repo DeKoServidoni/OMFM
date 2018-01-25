@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
@@ -69,12 +70,16 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     private val downChildAnimation = AnimationUtils.loadAnimation(context, R.anim.omfm_anim_child_collapse)
 
     // background colors
-    private var labelBackgroundDrawable = R.drawable.omfm_label_rounded_corners
     private var labelBackgroundColor = -1
     private var labelTextColor = ContextCompat.getColor(context, R.color.omfm_label_text_black)
     private var expandedBackgroundColor = ContextCompat.getColor(context, android.R.color.transparent)
     private var colorMainButton = ContextCompat.getColor(context, R.color.omfm_default_color)
     private var colorSecondaryButtons = ContextCompat.getColor(context, R.color.omfm_default_color)
+
+    // drawables
+    private var labelBackgroundDrawable = R.drawable.omfm_label_rounded_corners
+    private var mainCollapsedDrawable: Drawable? = null
+    private var mainExpandedDrawable: Drawable? = null
 
     // click listener
     private val fabClickListener = OnClickListener {
@@ -116,75 +121,14 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         val initialFabRight = initialFabLeft + initialFab.measuredWidth
         val initialFabBottom = initialFabTop + initialFab.measuredHeight
 
-        initialFab.layout(initialFabLeft - initialFabRightMargin, initialFabTop - initialFabBottomMargin,
-                initialFabRight - initialFabRightMargin, initialFabBottom - initialFabBottomMargin)
+        // calculate the main button and it's label (if exists)
+        calculateMainButton(initialFabTop, initialFabLeft, initialFabRight, initialFabBottom)
 
-        // if this flag is true so we need to show the label of
-        // the main button that are inside the content defined by user
-        if(enableMainAsAction) {
-            val label = initialFab.getTag(tagId) as? TextView
+        // setup the main button as needed
+        setupMainButton()
 
-            if (label != null) {
-                val labelRight = initialFab.left - labelSpacing
-                val labelLeft = labelRight - label.measuredWidth
-                val labelTop = initialFab.top + (initialFab.height / 4)
-
-                label.layout(labelLeft, labelTop, labelRight, labelTop + label.measuredHeight)
-                label.alpha = if (isExpanded()) 1f else 0f
-
-                bringChildToFront(label)
-            }
-        }
-
-        // set the listener of the main button
-        // if the main was enabled as action
-        initialFab.setOnClickListener(if(!enableMainAsAction || !isExpanded()) this@OneMoreFabMenu else fabClickListener)
-
-        // bring the initial fab to front so we can
-        // call it onClick when the menu is collapsed
-        bringChildToFront(initialFab)
-
-        val labelsOffset = (maxButtonWidth / 2)
-
-        var nextY = if(isExpanded()) initialFabTop - fabSpacing
-        else initialFabTop + initialFab.measuredHeight + fabSpacing
-
-        for(i in 0..(childCount-1)) {
-            val view = getChildAt(i)
-
-            // skipping gone views (because we don't need to calculate), the initial button and main label if exists
-            if(view.id != initialFab.id && view.id != mainLabelId && view.visibility != View.GONE) {
-
-                // positioning the fab button
-                val childX = horizontalCenter - (view.measuredWidth / 2)
-                val childY = if(state == Direction.EXPANDED) nextY - view.measuredHeight else nextY
-
-                view.layout(childX - initialFabRightMargin, childY,
-                        childX + view.measuredWidth - initialFabRightMargin, childY + view.measuredHeight)
-
-                view.translationY = if(isExpanded()) 0f else (initialFabTop - childY).toFloat()
-                view.alpha = if (isExpanded()) 1f else 0f
-                view.setOnClickListener(if(isExpanded()) fabClickListener else null)
-
-                // positioning the label on the left of fab
-                val label = view.getTag(tagId) as? TextView
-                if(label != null) {
-
-                    val labelRight = horizontalCenter - labelsOffset
-                    val labelLeft = labelRight - label.measuredWidth
-                    val labelTop = childY + (view.measuredHeight - label.measuredHeight) / 2
-
-                    label.layout(labelLeft - labelSpacing, labelTop,
-                            labelRight - labelSpacing, labelTop + label.measuredHeight)
-
-                    label.translationY = if (isExpanded()) 0f else (initialFabTop - childY).toFloat()
-                    label.alpha = if (isExpanded()) 1f else 0f
-                }
-
-                nextY = if(isExpanded()) childY - fabSpacing
-                else childY + view.measuredHeight + fabSpacing
-            }
-        }
+        // calculate the options buttons and it's respective labels
+        calculateOptionsButton(initialFabTop, horizontalCenter)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -329,10 +273,15 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         this.rotateMainButton = attributes.getBoolean(R.styleable.OneMoreFabMenu_rotate_main_button, true)
         this.enableMainAsAction = attributes.getBoolean(R.styleable.OneMoreFabMenu_enable_main_as_action, false)
 
+        val mainExpandedDrawable = attributes.getResourceId(R.styleable.OneMoreFabMenu_main_action_drawable, -1)
+        this.mainExpandedDrawable = if(mainExpandedDrawable != -1) ContextCompat.getDrawable(context, mainExpandedDrawable) else null
+
         addButtons()
 
         attributes.recycle()
     }
+
+    /// Menu components setup
 
     private fun addButtons() {
         // add the other buttons from the options "menu"
@@ -391,6 +340,10 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             fab.elevation = childElevation
         }
 
+        if(isFirst) {
+            mainCollapsedDrawable = item.icon
+        }
+
         return fab
     }
 
@@ -416,5 +369,89 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         return label
+    }
+
+    /// Menu components calculations
+
+    private fun setupMainButton() {
+        // change the drawable of the main button
+        // if it was set as action
+        if(enableMainAsAction && mainExpandedDrawable != null) {
+            initialFab.setImageDrawable(if(isExpanded()) mainExpandedDrawable else mainCollapsedDrawable)
+        }
+
+        // set the listener of the main button
+        // if the main was enabled as action
+        initialFab.setOnClickListener(if(!enableMainAsAction || !isExpanded()) this@OneMoreFabMenu else fabClickListener)
+
+        // bring the initial fab to front so we can
+        // call it onClick when the menu is collapsed
+        bringChildToFront(initialFab)
+    }
+
+    private fun calculateMainButton(initialFabTop: Int, initialFabLeft: Int, initialFabRight: Int, initialFabBottom: Int) {
+        initialFab.layout(initialFabLeft - initialFabRightMargin, initialFabTop - initialFabBottomMargin,
+                initialFabRight - initialFabRightMargin, initialFabBottom - initialFabBottomMargin)
+
+        // if this flag is true so we need to show the label of
+        // the main button that are inside the content defined by user
+        if(enableMainAsAction) {
+            val label = initialFab.getTag(tagId) as? TextView
+
+            if (label != null) {
+                val labelRight = initialFab.left - labelSpacing
+                val labelLeft = labelRight - label.measuredWidth
+                val labelTop = initialFab.top + (initialFab.height / 4)
+
+                label.layout(labelLeft, labelTop, labelRight, labelTop + label.measuredHeight)
+                label.alpha = if (isExpanded()) 1f else 0f
+
+                bringChildToFront(label)
+            }
+        }
+    }
+
+    private fun calculateOptionsButton(initialFabTop: Int, horizontalCenter: Int) {
+        val labelsOffset = (maxButtonWidth / 2)
+
+        var nextY = if(isExpanded()) initialFabTop - fabSpacing
+        else initialFabTop + initialFab.measuredHeight + fabSpacing
+
+        for(i in 0..(childCount-1)) {
+            val view = getChildAt(i)
+
+            // skipping gone views (because we don't need to calculate), the initial button and main label if exists
+            if(view.id != initialFab.id && view.id != mainLabelId && view.visibility != View.GONE) {
+
+                // positioning the fab button
+                val childX = horizontalCenter - (view.measuredWidth / 2)
+                val childY = if(state == Direction.EXPANDED) nextY - view.measuredHeight else nextY
+
+                view.layout(childX - initialFabRightMargin, childY,
+                        childX + view.measuredWidth - initialFabRightMargin, childY + view.measuredHeight)
+
+                view.translationY = if(isExpanded()) 0f else (initialFabTop - childY).toFloat()
+                view.alpha = if (isExpanded()) 1f else 0f
+                view.setOnClickListener(if(isExpanded()) fabClickListener else null)
+
+                // positioning the label on the left of fab
+                val label = view.getTag(tagId) as? TextView
+                if(label != null) {
+
+                    val labelRight = horizontalCenter - labelsOffset
+                    val labelLeft = labelRight - label.measuredWidth
+                    val labelTop = childY + (view.measuredHeight - label.measuredHeight) / 2
+
+                    label.layout(labelLeft - labelSpacing, labelTop,
+                            labelRight - labelSpacing, labelTop + label.measuredHeight)
+
+                    label.translationY = if (isExpanded()) 0f else (initialFabTop - childY).toFloat()
+                    label.alpha = if (isExpanded()) 1f else 0f
+                }
+
+                nextY = if(isExpanded()) childY - fabSpacing
+                else childY + view.measuredHeight + fabSpacing
+            }
+        }
     }
 }
