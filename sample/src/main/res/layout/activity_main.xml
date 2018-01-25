@@ -35,6 +35,8 @@
         app:expanded_background_color="@color/omfm_expanded_background_sample"
         app:rotate_main_button="true"
         app:size_main_button="@integer/omfm_fab_size_normal"
-        app:size_secondary_buttons="@integer/omfm_fab_size_mini" />
+        app:size_secondary_buttons="@integer/omfm_fab_size_mini"
+        app:label_text_color="@color/colorPrimary"
+        app:enable_main_as_action="true"/>
 
 </android.support.design.widget.CoordinatorLayout>

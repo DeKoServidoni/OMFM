@@ -2,4 +2,6 @@
 <resources>
     <color name="omfm_default_color">#DD2C00</color>
     <color name="omfm_expanded_background_sample">#CCE9E9E9</color>
+    <color name="omfm_label_background_white">#FFFFFF</color>
+    <color name="omfm_label_text_black">#000000</color>
 </resources>

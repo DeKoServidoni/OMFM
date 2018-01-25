@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- First button is the initial Fab of the menu -->
-    <!-- Don't need the title in this case, so let it empty -->
+    <!-- Title here can be empty if you don't to add any action in the main button -->
     <item
         android:id="@+id/main_option"
         android:icon="@drawable/ic_add_white_24px"
-        android:title=""/>
+        android:title="@string/options_main"/>
 
     <!-- Options buttons of the Fab menu -->
     <item
@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/option2"
-        android:icon="@drawable/ic_alarm_white_24px"
+        android:icon="@drawable/ic_contacts_white_24px"
         android:title="@string/options_2" />
 
     <item
@@ -26,7 +26,7 @@
 
     <item
         android:id="@+id/option4"
-        android:icon="@drawable/ic_room_service_white_24px"
+        android:icon="@drawable/ic_announcement_white_24px"
         android:title="@string/options_4" />
 
 </menu>
