@@ -25,6 +25,10 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     interface OptionsClick {
         fun onOptionClick(optionId: Int?)
+        /*
+         Method to handle a fab button as a toggle button (to change it's icon/label according)
+         */
+        fun onOptionToggle(button: FloatingActionButton?)
     }
 
     enum class Direction {
@@ -81,12 +85,26 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mainCollapsedDrawable: Drawable? = null
     private var mainExpandedDrawable: Drawable? = null
 
-    // click listener
-    private val fabClickListener = OnClickListener {
-        clickCallback?.onOptionClick(it.id)
+    // map which contains which buttons should act like toggle btn
+    private val toggleButtonsMap: MutableMap<String, Boolean> = mutableMapOf()
 
-        if(closeOnClick) {
+    // click listener
+    private val fabClickListener = OnClickListener { view: View ->
+
+        // check first if it's a toggle button
+        var isToggleButton = false
+
+        if (toggleButtonsMap.containsKey(view.id.toString())) {
+            if (toggleButtonsMap[view.id.toString()] == true) {
+                isToggleButton = true
+            }
+        }
+
+        if(closeOnClick && !isToggleButton) {
+            clickCallback?.onOptionClick(view.id)
             collapse()
+        } else {
+            clickCallback?.onOptionToggle(view as FloatingActionButton)
         }
     }
 
@@ -243,6 +261,10 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun initializeUI(attrs: AttributeSet? = null) {
+
+        if (toggleButtonsMap.isNotEmpty())
+            toggleButtonsMap.clear()
+
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.OneMoreFabMenu)
 
         if (attributes.hasValue(R.styleable.OneMoreFabMenu_content_options)) {
@@ -343,6 +365,9 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         if(isFirst) {
             mainCollapsedDrawable = item.icon
         }
+
+        // if item should act like toggle btn (isCheckable = true -> it's a toggle button)
+        toggleButtonsMap[item.itemId.toString()] = item.isCheckable
 
         return fab
     }
