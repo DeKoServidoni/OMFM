@@ -9,6 +9,10 @@ Another floating action button menu with expand/collapse behavior.
 ![Example gif](/images/example_v1.0.3.gif) 
 
 ## What's new:
+
+### Version 1.1.1 (02/03/2018)
+* [Fix] Bug fixes
+
 ### Version 1.1.0 (01/25/2018)
 * [Feature] Add parameter in the layout to background text label
 * [Feature] Add parameter in the layout to color text label
@@ -104,7 +108,7 @@ The first item don't need to have a text because only the options have labels.
 To integrate with your project, just add the following line to your app `<build.gradle>` file
 
 ```java
-compile 'com.github.dekoservidoni:omfm:1.1.0'
+compile 'com.github.dekoservidoni:omfm:1.1.1'
 ```
 
 ## Licence
