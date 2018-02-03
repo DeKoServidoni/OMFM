@@ -51,8 +51,8 @@ This library have 1 main layout param and 12 optionals
    * Color of the label's text<br>
 * `<app:enable_main_as_action>` **[optional, *default=false*]** 
    * Flag to enable/disable the main button as an action when the menu is expanded<br>
-* `<app:main_action_drawable>` **[optional]** 
-   * Drawable of the main button when it is set as an action. The default is the icon defined in the content menu file<br>
+* `<app:main_action_drawable>` **[optional, *default=icon defined in the content menu file*]** 
+   * Drawable of the main button when it is set as an action.<br>
 
 ###### Example of usage
 
