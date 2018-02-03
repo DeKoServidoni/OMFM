@@ -27,21 +27,34 @@ Another floating action button menu with expand/collapse behavior.
 
 This library have 1 main layout param and 12 optionals
 
-* `<app:content_options>` **[Required]** "menu" resource file with the options that the menu will show<br>
-* `<app:color_main_button>` **[optional]** color of the main button (with + and x)<br>
-* `<app:color_secondary_buttons>` **[optional]** color of the other options buttons<br>
-* `<app:expanded_background_color>` **[optional]** color of the background when the component expands<br>
-* `<app:rotate_main_button>` **[optional, *default=true*]** enable/disable the rotation of main button<br>
-* `<app:size_main_button="@integer/omfm_fab_size_normal">` **[optional]** size of the main button<br>
-* `<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` **[optional]** size of the secondary buttons<br>
-* `<app:close_on_click>` **[optional, *default=false*]** flag to enable/disable the close menu when some option is clicked<br>
-* `<app:label_background_color>` **[optional]** change the background color of the label<br>
-* `<app:label_background_drawable>` **[optional]** if you want a drawable instead of color in the label's background<br>
-* `<app:label_text_color>` **[optional]** change the color of the label's text<br>
-* `<app:enable_main_as_action>` **[optional, *default=false*]** flag to enable/disable the main button as an action when the menu is expanded<br>
-* `<app:main_action_drawable>` **[optional]** drawable of the main button when it is set as an action. The default is the icon defined in the content menu file<br>
+* `<app:content_options>` **[Required]** 
+   * Resource "menu" file with the options that the menu will show<br>
+* `<app:color_main_button>` **[optional]** 
+   * Color of the main button<br>
+* `<app:color_secondary_buttons>` **[optional]** 
+   * Color of the other options buttons<br>
+* `<app:expanded_background_color>` **[optional]** 
+   * Color of the background when the component expands<br>
+* `<app:rotate_main_button>` **[optional, *default=true*]** 
+   * Flag to enable/disable the rotation of main button<br>
+* `<app:size_main_button="@integer/omfm_fab_size_normal">` **[optional]** 
+   * Size of the main button<br>
+* `<app:size_secondary_buttons="@integer/omfm_fab_size_mini">` **[optional]** 
+   * Size of the secondary buttons<br>
+* `<app:close_on_click>` **[optional, *default=false*]** 
+   * Flag to enable/disable the close menu when some option is clicked<br>
+* `<app:label_background_color>` **[optional, *default=white*]** 
+   * Background color of the label<br>
+* `<app:label_background_drawable>` **[optional]** 
+   * If you want a drawable instead of color in the label's background<br>
+* `<app:label_text_color>` **[optional, *default=black*]** 
+   * Color of the label's text<br>
+* `<app:enable_main_as_action>` **[optional, *default=false*]** 
+   * Flag to enable/disable the main button as an action when the menu is expanded<br>
+* `<app:main_action_drawable>` **[optional]** 
+   * Drawable of the main button when it is set as an action. The default is the icon defined in the content menu file<br>
 
-###### Example
+###### Example of usage
 
 ```xml
    <com.dekoservidoni.omfm.OneMoreFabMenu
