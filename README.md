@@ -12,6 +12,7 @@ Another floating action button menu with expand/collapse behavior.
 
 ### Version 1.1.1 (02/03/2018)
 * [Fix] Bug fixes
+  * Main button label shows with not text when text is “” (empty)
 
 ### Version 1.1.0 (01/25/2018)
 * [Feature] Add parameter in the layout to background text label
