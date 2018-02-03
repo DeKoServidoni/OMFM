@@ -297,7 +297,9 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
                 // to be the first fab button of the component
                 initialFab = fab
 
-                if(enableMainAsAction) {
+                if(enableMainAsAction
+                        && !item.title.isEmpty()
+                        && item.title != null) {
                     val mainLabel = buildTextLabel(item, true)
                     initialFab.setTag(tagId, mainLabel)
                     addView(mainLabel)
