@@ -1,12 +1,19 @@
-package com.dekoservidoni.omfm
+package com.dekoservidoni.omfm.utils
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
+import com.dekoservidoni.omfm.OneMoreFabMenu
 
-class OneMoreButtonFabScrollBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<OneMoreFabMenu>() {
+/**
+ * Class responsible to hold the responsability
+ * of the scroll behaviour
+ *
+ * @author Antonio Oliva
+ */
+class OneMoreFabScrollBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<OneMoreFabMenu>() {
 
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: OneMoreFabMenu,
                                      directTargetChild: View, target: View, nestedScrollAxes: Int, type: Int): Boolean {
