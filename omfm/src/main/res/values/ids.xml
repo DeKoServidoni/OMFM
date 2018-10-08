@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="omfm_tag" type="id">OMFMTag</item>
-    <item name="omfm_main_label_id" type="id">OMFMLabelId</item>
+    <item name="omfm_tag" type="id"/>
+    <item name="omfm_main_label_id" type="id"/>
 </resources>

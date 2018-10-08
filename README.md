@@ -125,6 +125,23 @@ To integrate with your project, just add the following line to your app `<build.
 compile 'com.github.dekoservidoni:omfm:1.1.1'
 ```
 
+## Important!
+
+Please make sure your project have Kotlin support:
+
+Top-level build.gradle:
+```java
+classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
+```
+
+Module build.gradle:
+```java
+apply plugin: 'kotlin-android' 
+apply plugin: 'kotlin-android-extensions'
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51"
+```
+
 ## Licence
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
