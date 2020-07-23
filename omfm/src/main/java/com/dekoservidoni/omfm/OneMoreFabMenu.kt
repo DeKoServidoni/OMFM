@@ -6,8 +6,8 @@ import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View

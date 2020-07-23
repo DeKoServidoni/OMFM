@@ -2,8 +2,8 @@ package com.dekoservidoni.omfm.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MenuInflater
 import android.widget.PopupMenu
