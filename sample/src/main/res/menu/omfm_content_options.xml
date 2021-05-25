@@ -29,4 +29,40 @@
         android:icon="@drawable/ic_announcement_white_24px"
         android:title="@string/options_4" />
 
+    <item
+        android:id="@+id/option5"
+        android:icon="@drawable/ic_announcement_white_24px"
+        android:title="@string/options_4" />
+
+    <item
+        android:id="@+id/option6"
+        android:icon="@drawable/ic_announcement_white_24px"
+        android:title="@string/options_4" />
+
+    <item
+        android:id="@+id/option7"
+        android:icon="@drawable/ic_announcement_white_24px"
+        android:title="@string/options_4" />
+
+    <item
+        android:id="@+id/option8"
+        android:icon="@drawable/ic_announcement_white_24px"
+        android:title="@string/options_4" />
+
+    <item
+        android:id="@+id/option9"
+        android:icon="@drawable/ic_announcement_white_24px"
+        android:title="@string/options_4" />
+
+    <item
+        android:id="@+id/option10"
+        android:icon="@drawable/ic_announcement_white_24px"
+        android:title="@string/options_4" />
+
+    <item
+        android:id="@+id/option11"
+        android:icon="@drawable/ic_add_white_24px"
+        android:title="LAST" />
+
+
 </menu>
