@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 
 import com.dekoservidoni.omfm.utils.OneMoreFabUtils
 import com.dekoservidoni.omfm.utils.OneMoreFabValues
@@ -276,6 +277,10 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         label.layoutParams = generateDefaultLayoutParams()
         label.setPadding(values.labelPadding, values.labelPadding, values.labelPadding, values.labelPadding)
         label.setTextColor(ColorStateList.valueOf(values.labelTextColor))
+
+        if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+            label.rotationX = 180F
+        }
 
         if(isFirst) {
             label.id = utils.LABEL_ID
