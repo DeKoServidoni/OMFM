@@ -1,4 +1,4 @@
-# OneMoreFabMenu
+# [DEPRECATED] OneMoreFabMenu
 
 Another floating action button menu with expand/collapse behavior.
 
